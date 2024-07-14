@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rabbitmq_instance_3.7
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "1883:1883"
+      - "61613:61613"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "10"
+    restart: always
+
+volumes:
+  rabbitmq_data:
+    driver: local
