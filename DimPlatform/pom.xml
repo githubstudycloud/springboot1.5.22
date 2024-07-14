@@ -19,6 +19,8 @@
         <module>DimPlatformTest</module>
         <module>TestEureka</module>
         <module>TestRedis</module>
+        <module>TestMysql</module>
+        <module>TestRabbitmq</module>
     </modules>
 
     <properties>
