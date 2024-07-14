@@ -1,0 +1,64 @@
+version: '3.8'
+
+x-redis-common: &redis-common
+  networks:
+    - redis-cluster
+
+services:
+  redis-node-1:
+    <<: *redis-common
+    build:
+      context: .
+      dockerfile: Dockerfile-node-1
+    ports:
+      - "6379:6379"
+      - "16379:16379"
+
+  redis-node-2:
+    <<: *redis-common
+    build:
+      context: .
+      dockerfile: Dockerfile-node-2
+    ports:
+      - "6380:6379"
+      - "16380:16379"
+
+  redis-node-3:
+    <<: *redis-common
+    build:
+      context: .
+      dockerfile: Dockerfile-node-3
+    ports:
+      - "6381:6379"
+      - "16381:16379"
+
+  redis-node-4:
+    <<: *redis-common
+    build:
+      context: .
+      dockerfile: Dockerfile-node-4
+    ports:
+      - "6382:6379"
+      - "16382:16379"
+
+  redis-node-5:
+    <<: *redis-common
+    build:
+      context: .
+      dockerfile: Dockerfile-node-5
+    ports:
+      - "6383:6379"
+      - "16383:16379"
+
+  redis-node-6:
+    <<: *redis-common
+    build:
+      context: .
+      dockerfile: Dockerfile-node-6
+    ports:
+      - "6384:6379"
+      - "16384:16379"
+
+networks:
+  redis-cluster:
+    driver: bridge

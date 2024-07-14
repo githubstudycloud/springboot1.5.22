@@ -1,0 +1,60 @@
+version: '3.8'
+
+x-redis-common: &redis-common
+  image: redis:6.2.6
+  command: redis-server /usr/local/etc/redis/redis.conf
+  networks:
+    - redis-cluster
+
+services:
+  redis-node-1:
+    <<: *redis-common
+    ports:
+      - "6379:6379"
+      - "16379:16379"
+    volumes:
+      - ./redis-node-1.conf:/usr/local/etc/redis/redis.conf
+
+  redis-node-2:
+    <<: *redis-common
+    ports:
+      - "6380:6379"
+      - "16380:16379"
+    volumes:
+      - ./redis-node-2.conf:/usr/local/etc/redis/redis.conf
+
+  redis-node-3:
+    <<: *redis-common
+    ports:
+      - "6381:6379"
+      - "16381:16379"
+    volumes:
+      - ./redis-node-3.conf:/usr/local/etc/redis/redis.conf
+
+  redis-node-4:
+    <<: *redis-common
+    ports:
+      - "6382:6379"
+      - "16382:16379"
+    volumes:
+      - ./redis-node-4.conf:/usr/local/etc/redis/redis.conf
+
+  redis-node-5:
+    <<: *redis-common
+    ports:
+      - "6383:6379"
+      - "16383:16379"
+    volumes:
+      - ./redis-node-5.conf:/usr/local/etc/redis/redis.conf
+
+  redis-node-6:
+    <<: *redis-common
+    ports:
+      - "6384:6379"
+      - "16384:16379"
+    volumes:
+      - ./redis-node-6.conf:/usr/local/etc/redis/redis.conf
+
+networks:
+  redis-cluster:
+    driver: bridge
