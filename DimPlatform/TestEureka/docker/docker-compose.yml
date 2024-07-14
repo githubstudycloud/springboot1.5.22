@@ -1,0 +1,41 @@
+version: '3'
+services:
+  eureka-server1:
+    build: .
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=peer1
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server1
+      - SERVER_PORT=8761
+      - EUREKA_SERVER_URL=http://eureka-server2:8762/eureka/,http://eureka-server3:8763/eureka/
+    networks:
+      - eureka-network
+
+  eureka-server2:
+    build: .
+    ports:
+      - "8762:8762"
+    environment:
+      - SPRING_PROFILES_ACTIVE=peer2
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server2
+      - SERVER_PORT=8762
+      - EUREKA_SERVER_URL=http://eureka-server1:8761/eureka/,http://eureka-server3:8763/eureka/
+    networks:
+      - eureka-network
+
+  eureka-server3:
+    build: .
+    ports:
+      - "8763:8763"
+    environment:
+      - SPRING_PROFILES_ACTIVE=peer3
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server3
+      - SERVER_PORT=8763
+      - EUREKA_SERVER_URL=http://eureka-server1:8761/eureka/,http://eureka-server2:8762/eureka/
+    networks:
+      - eureka-network
+
+networks:
+  eureka-network:
+    driver: bridge
