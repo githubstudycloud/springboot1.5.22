@@ -21,6 +21,7 @@
         <module>TestRedis</module>
         <module>TestMysql</module>
         <module>TestRabbitmq</module>
+        <module>TestCron</module>
     </modules>
 
     <properties>

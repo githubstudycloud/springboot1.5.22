@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cron-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cron-service
+  template:
+    metadata:
+      labels:
+        app: cron-service
+    spec:
+      containers:
+        - name: cron-service
+          image: your-docker-registry/cron-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/crondb?useSSL=false
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password
