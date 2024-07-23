@@ -1,34 +1,58 @@
 version: '3'
+
 services:
-  cron-service-1:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/crondb?useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=password
-    depends_on:
-      - mysql
-
-  cron-service-2:
-    build: .
-    ports:
-      - "8081:8080"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/crondb?useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=password
-    depends_on:
-      - mysql
-
-  mysql:
+  mysql-business:
     image: mysql:5.7
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=crondb
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: business_db
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql_business_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  mysql-quartz:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: quartz_db
+    volumes:
+      - mysql_quartz_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  app1:
+    build: .
+    depends_on:
+      - mysql-business
+      - mysql-quartz
+    environment:
+      BUSINESS_DATASOURCE_URL: jdbc:mysql://mysql-business:3306/business_db?useSSL=false
+      BUSINESS_DATASOURCE_USERNAME: root
+      BUSINESS_DATASOURCE_PASSWORD: rootpassword
+      QUARTZ_DATASOURCE_URL: jdbc:mysql://mysql-quartz:3306/quartz_db?useSSL=false
+      QUARTZ_DATASOURCE_USERNAME: root
+      QUARTZ_DATASOURCE_PASSWORD: rootpassword
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+
+  app2:
+    build: .
+    depends_on:
+      - mysql-business
+      - mysql-quartz
+    environment:
+      BUSINESS_DATASOURCE_URL: jdbc:mysql://mysql-business:3306/business_db?useSSL=false
+      BUSINESS_DATASOURCE_USERNAME: root
+      BUSINESS_DATASOURCE_PASSWORD: rootpassword
+      QUARTZ_DATASOURCE_URL: jdbc:mysql://mysql-quartz:3306/quartz_db?useSSL=false
+      QUARTZ_DATASOURCE_USERNAME: root
+      QUARTZ_DATASOURCE_PASSWORD: rootpassword
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
 
 volumes:
-  mysql-data:
+  mysql_business_data:
+  mysql_quartz_data:

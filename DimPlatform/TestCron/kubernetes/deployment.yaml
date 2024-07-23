@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cron-service
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: cron-service
@@ -18,9 +18,21 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-service:3306/crondb?useSSL=false
-            - name: SPRING_DATASOURCE_USERNAME
-              value: root
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: password
+            - name: SPRING_PROFILES_ACTIVE
+              value: "cluster"
+            - name: DB_HOST
+              value: "mysql-service"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: "quartz_db"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: password
