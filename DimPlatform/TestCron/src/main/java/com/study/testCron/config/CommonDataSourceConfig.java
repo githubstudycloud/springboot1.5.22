@@ -16,34 +16,34 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.study.testCron.mapper", sqlSessionTemplateRef  = "businessSqlSessionTemplate")
-public class BusinessDataSourceConfig {
+@MapperScan(basePackages = "com.study.testCron.dao.common", sqlSessionTemplateRef = "commonSqlSessionTemplate")
+public class CommonDataSourceConfig {
 
     @Primary
-    @Bean(name = "businessDataSource")
-    @ConfigurationProperties(prefix = "business.datasource")
-    public DataSource businessDataSource() {
+    @Bean(name = "commonDataSource")
+    @ConfigurationProperties(prefix = "common.datasource")
+    public DataSource commonDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Primary
-    @Bean(name = "businessSqlSessionFactory")
-    public SqlSessionFactory businessSqlSessionFactory(@Qualifier("businessDataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "commonSqlSessionFactory")
+    public SqlSessionFactory commonSqlSessionFactory(@Qualifier("commonDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/common/*.xml"));
         return bean.getObject();
     }
 
     @Primary
-    @Bean(name = "businessTransactionManager")
-    public DataSourceTransactionManager businessTransactionManager(@Qualifier("businessDataSource") DataSource dataSource) {
+    @Bean(name = "commonTransactionManager")
+    public DataSourceTransactionManager commonTransactionManager(@Qualifier("commonDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Primary
-    @Bean(name = "businessSqlSessionTemplate")
-    public SqlSessionTemplate businessSqlSessionTemplate(@Qualifier("businessSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "commonSqlSessionTemplate")
+    public SqlSessionTemplate commonSqlSessionTemplate(@Qualifier("commonSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }

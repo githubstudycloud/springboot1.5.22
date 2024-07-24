@@ -1,4 +1,4 @@
 package com.study.testCron.service;
 
-public class JobService {
+public interface HttpGroupJobService {
 }

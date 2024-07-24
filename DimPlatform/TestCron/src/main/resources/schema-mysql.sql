@@ -16,21 +16,23 @@ CREATE TABLE refresh_configs
 );
 
 -- 创建刷新配置表
-CREATE TABLE refresh_configs (
-                                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                 data_type VARCHAR(255) NOT NULL,
-                                 refresh_url VARCHAR(255) NOT NULL,
-                                 status_url VARCHAR(255) NOT NULL,
-                                 post_params TEXT,
-                                 max_refresh_time INT NOT NULL
+CREATE TABLE refresh_configs
+(
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    data_type        VARCHAR(255) NOT NULL,
+    refresh_url      VARCHAR(255) NOT NULL,
+    status_url       VARCHAR(255) NOT NULL,
+    post_params      TEXT,
+    max_refresh_time INT          NOT NULL
 );
 
 -- 插入一些示例数据
 INSERT INTO refresh_configs (data_type, refresh_url, status_url, post_params, max_refresh_time)
-VALUES
-    ('product', 'http://api.example.com/refresh/product', 'http://api.example.com/status/product', '{"key": "value"}', 300),
-    ('user', 'http://api.example.com/refresh/user', 'http://api.example.com/status/user', '{"type": "full"}', 600),
-    ('order', 'http://api.example.com/refresh/order', 'http://api.example.com/status/order', '{"last_days": 30}', 900);
+VALUES ('product', 'http://api.example.com/refresh/product', 'http://api.example.com/status/product',
+        '{"key": "value"}', 300),
+       ('user', 'http://api.example.com/refresh/user', 'http://api.example.com/status/user', '{"type": "full"}', 600),
+       ('order', 'http://api.example.com/refresh/order', 'http://api.example.com/status/order', '{"last_days": 30}',
+        900);
 
 -- 存储有关调度器实例的信息
 CREATE TABLE QRTZ_SCHEDULER_STATE
