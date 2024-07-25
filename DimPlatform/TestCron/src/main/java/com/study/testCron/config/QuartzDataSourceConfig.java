@@ -16,3 +16,4 @@ public class QuartzDataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 }
+

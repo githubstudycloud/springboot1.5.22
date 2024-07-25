@@ -26,8 +26,9 @@ public class SchedulerConfig {
     private DataSource quartzDataSource;
 
     @Autowired
-    @Qualifier("businessTransactionManager")
+    @Qualifier("commonTransactionManager")
     private PlatformTransactionManager transactionManager;
+
 
     @Bean
     public SpringBeanJobFactory springBeanJobFactory() {

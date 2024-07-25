@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  mysql-business:
+  mysql-common:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -24,12 +24,12 @@ services:
   app1:
     build: .
     depends_on:
-      - mysql-business
+      - mysql-common
       - mysql-quartz
     environment:
-      BUSINESS_DATASOURCE_URL: jdbc:mysql://mysql-business:3306/business_db?useSSL=false
-      BUSINESS_DATASOURCE_USERNAME: root
-      BUSINESS_DATASOURCE_PASSWORD: rootpassword
+      COMMON_DATASOURCE_URL: jdbc:mysql://mysql-common:3306/business_db?useSSL=false
+      COMMON_DATASOURCE_USERNAME: root
+      COMMON_DATASOURCE_PASSWORD: rootpassword
       QUARTZ_DATASOURCE_URL: jdbc:mysql://mysql-quartz:3306/quartz_db?useSSL=false
       QUARTZ_DATASOURCE_USERNAME: root
       QUARTZ_DATASOURCE_PASSWORD: rootpassword
@@ -40,12 +40,12 @@ services:
   app2:
     build: .
     depends_on:
-      - mysql-business
+      - mysql-common
       - mysql-quartz
     environment:
-      BUSINESS_DATASOURCE_URL: jdbc:mysql://mysql-business:3306/business_db?useSSL=false
-      BUSINESS_DATASOURCE_USERNAME: root
-      BUSINESS_DATASOURCE_PASSWORD: rootpassword
+      COMMON_DATASOURCE_URL: jdbc:mysql://mysql-common:3306/business_db?useSSL=false
+      COMMON_DATASOURCE_USERNAME: root
+      COMMON_DATASOURCE_PASSWORD: rootpassword
       QUARTZ_DATASOURCE_URL: jdbc:mysql://mysql-quartz:3306/quartz_db?useSSL=false
       QUARTZ_DATASOURCE_USERNAME: root
       QUARTZ_DATASOURCE_PASSWORD: rootpassword
