@@ -4,7 +4,8 @@ import time
 from datetime import datetime
 
 # 配置部分
-FILE_EXTENSIONS = ['.py', '.properties', '.yml', '.java', '.xml']  # 支持的文件扩展名
+# FILE_EXTENSIONS = ['.py', '.properties', '.yml', '.java', '.xml']  # 支持的文件扩展名
+FILE_EXTENSIONS = ['.py', '.properties', '.java', '.xml']  # 支持的文件扩展名
 # FILE_EXTENSIONS = ['.properties', '.yml', '.java']  # 支持的文件扩展名
 # FILE_EXTENSIONS = ['.xml']  # 支持的文件扩展名
 # FOLDER_PATH = r'E:\idea\java\springboot1.5.x\DimPlatform'  # 输入文件夹路径
